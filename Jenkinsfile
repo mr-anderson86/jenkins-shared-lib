@@ -37,7 +37,7 @@ pipeline {
     stage('test getStageLog') {
       steps {
         echo "Testing getStageLog function,"
-        echo "showing output only from 'init' stage"...
+        echo "showing output only from 'init' stage..."
         echo getStageLog('init')
         echo "Testing getStageLog done."
       }
