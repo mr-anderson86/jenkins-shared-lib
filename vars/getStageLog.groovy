@@ -4,6 +4,11 @@ def call(String stageName = '') {
 	  Then it'll return the whole build log up to function calling step.
 	*/
 	
+	/*The getLog method below requiers Admin Script Approval.
+	  I could've use currentBuild.rawBuild.log and skip the approval part, but it contains all those "(hide)" links, 
+	  which in mail or file looks very messy.
+	  The getLog method is the only way I found to get the log without those messy links. :/
+	*/
 	def buildLog = currentBuild.rawBuild.getLog(currentBuild.rawBuild.log.length()).join('\n')
 	//println buildLog
 
