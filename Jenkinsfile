@@ -2,7 +2,7 @@
 //This pipeline is to test the functions in this repo
 
 pipeline {
-  ageny any
+  agent any
   
   stage {
     stage('init') {
