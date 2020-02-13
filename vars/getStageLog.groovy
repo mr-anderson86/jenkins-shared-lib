@@ -1,4 +1,9 @@
 def call(String stageName = '') {
+	/*Return spesific stage log in current build.
+	  if no stage name was given, or stage name was not found,
+	  Then it'll return the whole build log up to function calling step.
+	*/
+	
 	def buildLog = currentBuild.rawBuild.getLog(currentBuild.rawBuild.log.length()).join('\n')
 	//println buildLog
 
