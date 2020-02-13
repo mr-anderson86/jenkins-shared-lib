@@ -42,7 +42,10 @@ pipeline {
   agent { node { label 'my_node' } }
   stage ('stage_1') {
     steps {
-      // do some commands
+      //can see the code under vars/loadProperties.groovy
+	  loadProperties('path/to/file')
+	  
+	  // do some commands
     }
     post {
       always {
@@ -51,14 +54,8 @@ pipeline {
         
         writeFile file: "stage.log", text: "${env.STAGE_LOG}"
         emailext (
-          mimeType: 'text/html',
           subject: "[${JOB_NAME}] #${BUILD_NUMBER}] - Stage_1 status",
-          attachLog: false,
-          body: """<html><body>
-          [${JOB_NAME}] #${BUILD_NUMBER}] - Finished stage 1 </br>
-          BUILD_URL: ${BUILD_URL} </br>
-          Log is in attachment.
-          </body></html>""",
+          body: 'See log in attachment.',
           to: "some.mail@some.company.com",
           attachmentsPattern: "stage.log"
         )
@@ -73,13 +70,7 @@ pipeline {
       emailext (
         mimeType: 'text/html',
         subject: "[${JOB_NAME}] #${BUILD_NUMBER}] - Stage_2 status",
-        attachLog: false,
-        body: """<html><body>
-        [${JOB_NAME}] #${BUILD_NUMBER}] - Finished stage 12</br>
-        BUILD_URL: ${BUILD_URL} </br>
-        Log is below: </br>
-        ${STAGE_LOG}
-        </body></html>""",
+        body: """<html><body>Log is below: </br>${STAGE_LOG} </body></html>""",
         to: "some.mail@some.company.com"
       )
       script { env.STAGE_LOG = "" }
@@ -101,20 +92,18 @@ properties([
 
 node('my_node') {
   stage('stage_1') {
-    // do some commands
+    checkout scm
+	//can see the code under vars/loadProperties.groovy
+	loadProperties('path/to/file')
+	
+	// do some commands
     
     //can see the code under vars/getStageLog.groovy
     env.STAGE_LOG = getStageLog('stage_1')
     writeFile file: "stage.log", text: "${env.STAGE_LOG}"
     
-    emailext mimeType: 'text/html',
-      subject: "[${JOB_NAME}] #${BUILD_NUMBER}] - Stage_1 status",
-      attachLog: false,
-      body: """<html><body>
-      [${JOB_NAME}] #${BUILD_NUMBER}] - Finished stage 1</br>
-      BUILD_URL: ${BUILD_URL} </br>
-      Log is in attachment.
-      </body></html>""",
+    emailext subject: "[${JOB_NAME}] #${BUILD_NUMBER}] - Stage_1 status",
+      body: 'See log in attachment.',
       to: "some.mail@some.company.com",
       attachmentsPattern: "stage.log"
     
@@ -127,13 +116,7 @@ node('my_node') {
     
     emailext mimeType: 'text/html',
       subject: "[${JOB_NAME}] #${BUILD_NUMBER}] - Stage_2 status",
-      attachLog: false,
-      body: """<html><body>
-      [${JOB_NAME}] #${BUILD_NUMBER}] - Finished stage 12</br>
-      BUILD_URL: ${BUILD_URL} </br>
-      Log is below: </br>
-      ${STAGE_LOG}
-      </body></html>""",
+      body: """<html><body>Log is below: </br>${STAGE_LOG} </body></html>""",
       to: "some.mail@some.company.com"
     
     env.STAGE_LOG = ""
