@@ -27,7 +27,7 @@ This repo contains simple methods which could be use in every Jenkins pipeline.
 * Jenkins ;-)  
 (You might want to upgrade your Jenkins version to a more advaned one, that's for you own considuration.)
 * If you want to use the methods from this repo, you'll need to add it as a [Global Pipeline Libraries](https://jenkins.io/doc/book/pipeline/shared-libraries/) in your Jenkins
-* Any plugins which will add support for coding in you Jenkinsfiles   
+* Any plugins which will add support for coding in your Jenkinsfiles   
 (example: Artifactory plugin version >= 3.0.0, without it you can't use Artifactory upload methods).
 * Some of the code here might need to be [approved by Jenkins admin](https://jenkins.io/doc/book/managing/script-approval/), I'm trying to avoid it as much as I can, but sadly not always it's possible.
 
