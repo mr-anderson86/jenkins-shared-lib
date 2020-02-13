@@ -43,9 +43,9 @@ pipeline {
   stage ('stage_1') {
     steps {
       //can see the code under vars/loadProperties.groovy
-	  loadProperties('path/to/file')
-	  
-	  // do some commands
+      loadProperties('path/to/file')
+
+      // do some commands
     }
     post {
       always {
@@ -93,11 +93,11 @@ properties([
 node('my_node') {
   stage('stage_1') {
     checkout scm
-	//can see the code under vars/loadProperties.groovy
-	loadProperties('path/to/file')
-	
-	// do some commands
-    
+    //can see the code under vars/loadProperties.groovy
+    loadProperties('path/to/file')
+
+    // do some commands
+
     //can see the code under vars/getStageLog.groovy
     env.STAGE_LOG = getStageLog('stage_1')
     writeFile file: "stage.log", text: "${env.STAGE_LOG}"
