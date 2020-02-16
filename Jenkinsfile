@@ -61,10 +61,8 @@ pipeline {
           echo "myMap.name = ${myMap.name}"
           echo "myMap.number = ${myMap.number}"
           echo "myMap.myList = ${myMap.myList}"
-          
-          def myJson = parseJson.toJson(jsonText)
-          echo "Testing prettyPrint..."
-          parseJson.prettyPrint(myJson)
+      
+          parseJson.prettyPrint(myMap)
         }
       }
     }
