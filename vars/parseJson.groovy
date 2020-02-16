@@ -1,5 +1,5 @@
 import groovy.json.JsonSlurper
-import groovy.json.JsonOutput
+import static groovy.json.JsonOutput.*
 def call(String text) {
   /*Gets json as text,
     return it as map (using jsonSlurper: https://groovy-lang.org/json.html)
@@ -15,11 +15,10 @@ def call(String text) {
   return data
 }
 
-def toJson(String text) {
-  def data = JsonOutput.toJson(text)
-  return data
+def toJson(Map data) {
+  return toJson(data)
 }
 
-def prettyPrint(data) {
-  JsonOutput.prettyPrint(data)
+def prettyPrint(Map data) {
+  echo prettyPrint(toJson(data))
 }
