@@ -62,7 +62,7 @@ pipeline {
           echo "myMap.number = ${myMap.number}"
           echo "myMap.myList = ${myMap.myList}"
       
-          parseJson.prettyPrint(myMap)
+          echo parseJson.prettyPrint(myMap)
         }
       }
     }
