@@ -70,10 +70,13 @@ pipeline {
           assert myMap.number == 123
           assert myMap.name == 'John Doe'
           
+          echo "Pretty map printing:"
           parseJson.prettyPrint(myMap)
           
           def myJson = parseJson.mapToJson(myMap)
-          echo myJson
+          echo "myJson = ${myJson}"
+          
+          echo "Pretty json printing:"
           parseJson.prettyPrint(myJson)
           echo "parseJson testing done."
         }
