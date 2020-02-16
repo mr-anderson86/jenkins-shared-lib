@@ -61,6 +61,9 @@ pipeline {
           echo "myJson.name = ${myJson.name}"
           echo "myJson.number = ${myJson.number}"
           echo "myJson.myList = ${myJson.myList}"
+          
+          echo "Testing prettyPrint..."
+          parseJson.prettyPrint(myJson)
         }
       }
     }
