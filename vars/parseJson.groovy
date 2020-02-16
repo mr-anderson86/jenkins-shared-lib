@@ -21,5 +21,5 @@ def toJson(String text) {
 }
 
 def prettyPrint(data) {
-  echo(JsonOutput.prettyPrint(data))
+  JsonOutput.prettyPrint(data)
 }
