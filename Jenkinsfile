@@ -61,8 +61,11 @@ pipeline {
           echo "myMap.name = ${myMap.name}"
           echo "myMap.number = ${myMap.number}"
           echo "myMap.myList = ${myMap.myList}"
+          
+          def myJson = parseJson.toJson(myMap)
+          echo myJson.getClass().toString()
       
-          echo parseJson.prettyPrint(myMap)
+          parseJson.prettyPrint(myMap)
         }
       }
     }
