@@ -28,11 +28,12 @@ pipeline {
         sh "echo MY_VAR = ${MY_VAR}"
         sh "echo SOME_VERSION = ${env.SOME_VERSION}"
         sh 'echo MY_NUM = ${MY_NUM}'
-        
-        assert NAME == 'mr-anderson'
-        assert MY_VAR == 'my-val'
-        assert SOME_VERSION == '1.2.3'
-        assert MY_NUM == '10'
+        script {
+          assert NAME == 'mr-anderson'
+          assert MY_VAR == 'my-val'
+          assert SOME_VERSION == '1.2.3'
+          assert MY_NUM == '10'
+        }
         echo "Testing loadProperties done."
         echo ""
         echo "Env vars after test:"
