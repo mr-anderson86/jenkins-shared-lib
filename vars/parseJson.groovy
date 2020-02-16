@@ -1,3 +1,4 @@
+import groovy.json.JsonSlurper
 def call(String text) {
   /*Gets json as text,
     return it as map (using jsonSlurper: https://groovy-lang.org/json.html)
