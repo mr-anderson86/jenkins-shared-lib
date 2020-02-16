@@ -15,7 +15,7 @@ def call(String text) {
   return data
 }
 
-def prettyPrint(Map data) {
+def prettyPrint(data) {
   echo prettyPrint(toJson(data))
 }
 
