@@ -49,7 +49,7 @@ pipeline {
           def listTest = '"myList": [4, 8, 15, 16, 23, 42]'
           def intText = '"number": 123'
           def stringText = '"name": "John Doe"'
-          def jsonText = '{ ' + listTest + ',' + intText + ',' + stringText + '}'
+          def jsonText = '{ ' + listTest + ', ' + intText + ', ' + stringText + ' }'
           echo "jsonText = ${jsonText}" 
           
           def myJson = parseJson(jsonText)
