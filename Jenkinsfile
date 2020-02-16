@@ -28,6 +28,11 @@ pipeline {
         sh "echo MY_VAR = ${MY_VAR}"
         sh "echo SOME_VERSION = ${env.SOME_VERSION}"
         sh 'echo MY_NUM = ${MY_NUM}'
+        
+        assert NAME == 'mr-anderson'
+        assert MY_VAR == 'my-val'
+        assert SOME_VERSION == '1.2.3'
+        assert MY_NUM == '10'
         echo "Testing loadProperties done."
         echo ""
         echo "Env vars after test:"
@@ -55,17 +60,19 @@ pipeline {
           def myMap = parseJson(jsonText)
           echo "After parsing to json:"
           assert myMap instanceof Map
-          assert myMap.myList instanceof List
-          assert myMap.number == 123
-          assert myMap.name == 'John Doe'
+          
           echo "myMap.name = ${myMap.name}"
           echo "myMap.number = ${myMap.number}"
           echo "myMap.myList = ${myMap.myList}"
           
-          def myJson = parseJson.toJson(myMap)
-          echo myJson.getClass().toString()
-      
+          assert myMap.myList instanceof List
+          assert myMap.number == 123
+          assert myMap.name == 'John Doe'
+          
           parseJson.prettyPrint(myMap)
+          
+          def myJson = parseJson.mapToJson(myMap)
+          echo myJson
         }
       }
     }
