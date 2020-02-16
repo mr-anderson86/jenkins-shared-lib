@@ -58,6 +58,9 @@ pipeline {
           assert myJson.number == 123
           assert myJson.name == 'John Doe'
         }
+        echo "myJson.name = ${myJson.name}"
+        echo "myJson.number = ${myJson.number}"
+        echo "myJson.myList = ${myJson.myList}"
       }
     }
   }
