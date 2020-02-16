@@ -73,6 +73,7 @@ pipeline {
           
           def myJson = parseJson.mapToJson(myMap)
           echo myJson
+          echo "parseJson testing done."
         }
       }
     }
