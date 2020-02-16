@@ -53,6 +53,7 @@ pipeline {
           echo "jsonText = ${jsonText}" 
           
           def myJson = parseJson(jsonText)
+          echo "After parsing to json:"
           assert myJson instanceof Map
           assert myJson.myList instanceof List
           assert myJson.number == 123
