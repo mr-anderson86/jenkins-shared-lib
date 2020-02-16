@@ -15,6 +15,6 @@ def call(String text) {
   return data
 }
 
-def prettyPrint(map) {
-  echo(prettyPrint(map))
+def prettyPrint(data) {
+  echo(prettyPrint(data))
 }
