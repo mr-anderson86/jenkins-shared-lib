@@ -42,5 +42,23 @@ pipeline {
         echo "Testing getStageLog done."
       }
     }
+    stage('test parseJson') {
+      steps {
+        echo "Testing parseJson function..."
+        script {
+          def listTest = '"myList": [4, 8, 15, 16, 23, 42]'
+          def intText = '"number": 123'
+          def stringText = '"name": "John Doe"'
+          def jsonText = '{ ' + listTest + ',' + intText + ',' + stringText + '}'
+          echo "jsonText = ${jsonText}" 
+          
+          def myJson = parseJson(jsonText)
+          assert myJson instanceof Map
+          assert myJson.myList instanceof List
+          assert myJson.number == 123
+          assert myJson.name == 'John Doe'
+        }
+      }
+    }
   }
 }
