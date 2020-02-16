@@ -52,16 +52,17 @@ pipeline {
           def jsonText = '{ ' + listTest + ', ' + intText + ', ' + stringText + ' }'
           echo "jsonText = ${jsonText}" 
           
-          def myJson = parseJson(jsonText)
+          def myMap = parseJson(jsonText)
           echo "After parsing to json:"
-          assert myJson instanceof Map
-          assert myJson.myList instanceof List
-          assert myJson.number == 123
-          assert myJson.name == 'John Doe'
-          echo "myJson.name = ${myJson.name}"
-          echo "myJson.number = ${myJson.number}"
-          echo "myJson.myList = ${myJson.myList}"
+          assert myMap instanceof Map
+          assert myMap.myList instanceof List
+          assert myMap.number == 123
+          assert myMap.name == 'John Doe'
+          echo "myMap.name = ${myMap.name}"
+          echo "myMap.number = ${myMap.number}"
+          echo "myMap.myList = ${myMap.myList}"
           
+          def myJson = parseJson.toJson(jsonText)
           echo "Testing prettyPrint..."
           parseJson.prettyPrint(myJson)
         }
