@@ -3,7 +3,7 @@ import static groovy.json.JsonOutput.*
 //PLEASE NOTE: Might need admin script appoval (unless using as shared library)
 
 /**
- * Returns json string as a Map using jsonSlurper: https://groovy-lang.org/json.html ).
+ * Returns json string as a Map (using jsonSlurper: https://groovy-lang.org/json.html ).
  * jsonSlurper also puts the data within the map as: string, number, array, boolean, null 
  * and date (based on the yyyy-MM-dd’T’HH:mm:ssZ date format) 
  *
