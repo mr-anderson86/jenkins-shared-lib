@@ -78,7 +78,24 @@ pipeline {
           
           echo "Pretty json printing:"
           parseJson.prettyPrint(myJson)
-          echo "parseJson testing done."
+          echo "Pretty json printing testing done."
+          
+          echo "Testing parseJson.fromUrl..."
+          echo "Grabbing json from currn build url: ${BUILD_URL}"
+          myMap = parseJson.fromUrl("${BUILD_URL}/api/json")
+          
+          assert myMap instanceof Map
+          echo "myMap.number = ${myMap.number}"
+          echo "myMap.timestamp = ${myMap.timestamp}"
+          echo "myMap.fullDisplayName = ${myMap.fullDisplayName}"
+          echo "myMap.url = ${myMap.url}"
+          echo "myMap.result = ${myMap.result}"
+          
+          assert myMap.number = BUILD_NUMBER
+          assert myMap.fullDisplayName == "${JOB_NAME} #${BUILD_NUMBER}"
+          assert myMap.url == BUILD_URL
+          echo "Testing parseJson.fromUrl done."
+          echo "Testing parseJson done."
         }
       }
     }
