@@ -91,7 +91,7 @@ pipeline {
           echo "myMap.url = ${myMap.url}"
           echo "myMap.result = ${myMap.result}"
           
-          assert myMap.number == env.BUILD_NUMBER
+          assert myMap.number == env.BUILD_NUMBER as Integer
           assert myMap.fullDisplayName == "${JOB_NAME} #${BUILD_NUMBER}"
           assert myMap.url == env.BUILD_URL
           echo "Testing parseJson.fromUrl done."
