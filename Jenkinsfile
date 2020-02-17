@@ -81,8 +81,8 @@ pipeline {
           echo "Pretty json printing testing done."
           
           echo "Testing parseJson.fromUrl..."
-          echo "Grabbing json from currn build url: ${BUILD_URL}"
-          myMap = parseJson.fromUrl("${BUILD_URL}/api/json")
+          echo "Grabbing json from currn build url: ${BUILD_URL}api/json"
+          myMap = parseJson.fromUrl("${BUILD_URL}api/json")
           
           assert myMap instanceof Map
           echo "myMap.number = ${myMap.number}"
