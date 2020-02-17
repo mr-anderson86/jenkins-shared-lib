@@ -47,5 +47,5 @@ def mapToJson(Map data) {
  * @usage example: def myMap = parseJson.fromUrl("${BUILD_URL}/api/json")
  */
 def fromUrl(String url) {
-  return new JsonSlurper().parseText(new URL(url))
+  return new JsonSlurper().parseText((new URL(url)).text)
 }
