@@ -42,10 +42,18 @@ def mapToJson(Map data) {
 
 /**
  * @param url, in a string
+ * @param auth, String in format 'username:password'
  * @return the json from the URL as a map
  *
- * @usage example: def myMap = parseJson.fromUrl("${BUILD_URL}/api/json")
+ * @usage examples: def myMap = parseJson.fromUrl("${BUILD_URL}/api/json")
+ *                  def myMap = parseJson.fromUrl("${BUILD_URL}/api/json", 'myUser:myPassword')
  */
-def fromUrl(String url) {
-  return new JsonSlurper().parseText((new URL(url)).text)
+def fromUrl(String url_path, String auth='') {
+  URL url = new URL(url_path)
+  if (auth?.trim()) {
+    def authString = auth.getBytes().encodeBase64().toString()
+    return new JsonSlurper().parseText(url.getText(requestProperties: ["Authorization": "Basic ${authString}"]))
+  } else {
+    return new JsonSlurper().parseText(url.text)
+  }
 }
