@@ -27,7 +27,7 @@ def call(String creds='', json = false) {
   
   map.each {
     //Debugging
-	/*println "Stage name = ${it.displayName}"
+    /*println "Stage name = ${it.displayName}"
     println "Stage status = ${it.result}"
     println "Stage duration in mills = ${it.durationInMillis}"
 	println ""*/
