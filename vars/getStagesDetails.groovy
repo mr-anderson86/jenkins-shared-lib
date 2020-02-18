@@ -17,9 +17,14 @@ import static groovy.json.JsonOutput.*
  *                  def myJson = getStagesDetails(true, 'username:password')
  */
 
-def call(String creds = '', Boolean json = false) {  
+def call(body) {  
+  def config = [:]
+  body.resolveStrategy = Closure.DELEGATE_FIRST
+  body.delegate = config
+  body()
+  
   def url = "${JENKINS_URL}blue/rest/organizations/jenkins/pipelines/${JOB_NAME}/runs/${BUILD_NUMBER}/nodes/"
-  if (creds?.trim()) {
+  if (config.creds?.trim()) {
     url_host = env.JENKINS_URL.split('//')[1].split(':')[0]
     url_port = env.JENKINS_URL.split('//')[1].split(':')[1]
     url = "http://${creds}@${url_host}:${url_port}blue/rest/organizations/jenkins/pipelines/${JOB_NAME}/runs/${BUILD_NUMBER}/nodes/"
@@ -38,14 +43,6 @@ def call(String creds = '', Boolean json = false) {
     data."${key}_status" = it.result
     data."${key}_duration" = it.durationInMillis
   }
-  if (json) return toJson(data)
+  if (config.json) return toJson(data)
   else return data
-}
-
-def call(Boolean json = false) {
-  return call('',json)
-}
-
-def call(Boolean json = false, String creds = '') {
-  return call(creds,json)
 }
