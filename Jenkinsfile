@@ -88,7 +88,7 @@ pipeline {
           
           echo "Testing parseJson.fromUrl..."
           echo "Grabbing json from currn build url: ${BUILD_URL}api/json"
-          myMap = parseJson.fromUrl("${BUILD_URL}api/json", 'admin:admin')
+          myMap = parseJson.fromUrl("${BUILD_URL}api/json", 'onlyread:OnlyRead')
           
           assert myMap instanceof Map
           echo "myMap.number = ${myMap.number}"
@@ -111,7 +111,7 @@ pipeline {
         script {
           stagesList << env.STAGE_NAME
           
-          def myMap = getStagesDetails('admin:admin')
+          def myMap = getStagesDetails('onlyread:OnlyRead')
           assert myMap instanceof Map
           echo "Printing in map:"
           parseJson.prettyPrint(myMap)
@@ -124,7 +124,7 @@ pipeline {
         }
         
         echo "Printing in json:"
-        echo getStagesDetails(true,'blabla:blabla')
+        echo getStagesDetails(true,'onlyread:OnlyRead')
         echo "Testing getStagesDetails done."
       }
     }
