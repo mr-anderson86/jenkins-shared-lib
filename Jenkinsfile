@@ -111,7 +111,7 @@ pipeline {
         script {
           stagesList << env.STAGE_NAME
           
-          def myMap = getStagesDetails()
+          def myMap = getStagesDetails('admin:admin')
           assert myMap instanceof Map
           echo "Printing in map:"
           parseJson.prettyPrint(myMap)
@@ -124,7 +124,7 @@ pipeline {
         }
         
         echo "Printing in json:"
-        echo getStagesDetails(true)
+        echo getStagesDetails(true,'blabla:blabla')
         echo "Testing getStagesDetails done."
       }
     }
