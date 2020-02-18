@@ -11,13 +11,13 @@ pipeline {
         echo "Hoping that the getStageLog function will capture only this stage output"
         script {
           env.stages = []
-          env.stages.push(env.STAGE_NAME)
+          env.stages << env.STAGE_NAME
         }
       }
     }
     stage('test loadProperties') {
       steps {
-        script { env.stages.push(env.STAGE_NAME) }
+        env.stages << env.STAGE_NAME
         echo "Testing loadProperties function"
         echo ""
         echo "Env vars before test:"
