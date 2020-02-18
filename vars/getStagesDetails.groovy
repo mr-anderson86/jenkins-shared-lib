@@ -30,7 +30,7 @@ def call(String creds='', json = false) {
     /*println "Stage name = ${it.displayName}"
     println "Stage status = ${it.result}"
     println "Stage duration in mills = ${it.durationInMillis}"
-	println ""*/
+    println ""*/
     
     key = it.displayName.replace(" ","_")
     data."${key}_status" = it.result
