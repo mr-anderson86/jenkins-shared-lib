@@ -120,8 +120,8 @@ pipeline {
           
           env.stages.each {
             key = it.replace(" ","_")
-            echo myMap."${key}_status".getClass().toString()
-            echo myMap."${key}_dur".getClass().toString()
+            echo "myMap.${key}_status class = " + myMap."${key}_status".getClass().toString()
+            echo "myMap.${key}_dur class = " + myMap."${key}_dur".getClass().toString()
             assert myMap."${key}_status" instanceof String
             assert myMap."${key}_dur".class == Integer    
           }
