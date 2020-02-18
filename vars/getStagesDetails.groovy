@@ -42,6 +42,6 @@ def call(String creds = '', Boolean json = false) {
   else return data
 }
 
-def getStagesDetails(Boolean json = false, String creds = '') {
+def call(Boolean json = false, String creds = '') {
   return call(creds,json)
 }
