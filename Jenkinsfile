@@ -10,14 +10,14 @@ pipeline {
         echo "This is init"
         echo "Hoping that the getStageLog function will capture only this stage output"
         script {
-          env.stages = []
-          env.stages << env.STAGE_NAME
+          List stages = []
+          stages << env.STAGE_NAME
         }
       }
     }
     stage('test loadProperties') {
       steps {
-        script { env.stages << env.STAGE_NAME }
+        script { stages << env.STAGE_NAME }
         echo "Testing loadProperties function"
         echo ""
         echo "Env vars before test:"
@@ -47,7 +47,7 @@ pipeline {
     }
     stage('test getStageLog') {
       steps {
-        script { env.stages << env.STAGE_NAME }
+        script { stages << env.STAGE_NAME }
         echo "Testing getStageLog function,"
         echo "showing output only from 'init' stage..."
         echo getStageLog('init')
@@ -58,7 +58,7 @@ pipeline {
       steps {
         echo "Testing parseJson function..."
         script {
-          env.stages << env.STAGE_NAME
+          stages << env.STAGE_NAME
           
           def listTest = '"myList": [4, 8, 15, 16, 23, 42]'
           def intText = '"number": 123'
@@ -111,14 +111,14 @@ pipeline {
       steps {
         echo "Testing getStagesDetails..."
         script {
-          env.stages << env.STAGE_NAME
+          stages << env.STAGE_NAME
           
           def myMap = getStagesDetails()
           assert myMap instanceof Map
           echo "Printing in map:"
           parseJson.prettyPrint(myMap)
           
-          env.stages.each {
+          stages.each {
             key = it.replace(" ","_")
             echo "myMap.${key}_status class = " + myMap."${key}_status".getClass().toString()
             echo "myMap.${key}_dur class = " + myMap."${key}_dur".getClass().toString()
