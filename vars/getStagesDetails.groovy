@@ -12,10 +12,12 @@ import static groovy.json.JsonOutput.*
  *
  * @usage examples: def myMap = getStagesDetails()
  *                  def myMap = getStagesDetails('username:password')
- *                  def myJson = getStagesDetails(,true)
+ *                  def myJson = getStagesDetails(true)
+ *                  def myJson = getStagesDetails('username:password', true)
+ *                  def myJson = getStagesDetails(true, 'username:password')
  */
 
-def call(String creds='', json = false) {  
+def call(String creds = '', Boolean json = false) {  
   def url = "${JENKINS_URL}blue/rest/organizations/jenkins/pipelines/${JOB_NAME}/runs/${BUILD_NUMBER}/nodes/"
   if (creds?.trim()) {
     url_host = env.JENKINS_URL.split('//')[1].split(':')[0]
@@ -38,4 +40,12 @@ def call(String creds='', json = false) {
   }
   if (json) return toJson(data)
   else return data
+}
+
+def call(Boolean json = false) {
+  return call('',json)
+}
+
+def call(Boolean json = false, String creds = '') {
+  return call(creds,json)
 }
