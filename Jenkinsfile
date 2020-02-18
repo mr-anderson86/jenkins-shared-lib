@@ -9,10 +9,15 @@ pipeline {
       steps {
         echo "This is init"
         echo "Hoping that the getStageLog function will capture only this stage output"
+        script {
+          def env.stages = []
+          env.stages.push(env.STAGE_NAME)
+        }
       }
     }
     stage('test loadProperties') {
       steps {
+        script { env.stages.push(env.STAGE_NAME) }
         echo "Testing loadProperties function"
         echo ""
         echo "Env vars before test:"
@@ -42,6 +47,7 @@ pipeline {
     }
     stage('test getStageLog') {
       steps {
+        script { env.stages.push(env.STAGE_NAME) }
         echo "Testing getStageLog function,"
         echo "showing output only from 'init' stage..."
         echo getStageLog('init')
@@ -52,6 +58,8 @@ pipeline {
       steps {
         echo "Testing parseJson function..."
         script {
+          env.stages.push(env.STAGE_NAME)
+          
           def listTest = '"myList": [4, 8, 15, 16, 23, 42]'
           def intText = '"number": 123'
           def stringText = '"name": "John Doe"'
@@ -97,6 +105,29 @@ pipeline {
           echo "Testing parseJson.fromUrl done."
           echo "Testing parseJson done."
         }
+      }
+    }
+    stage('test getStagesDetails') {
+      steps {
+        echo "Testing getStagesDetails..."
+        script {
+          env.stages.push(env.STAGE_NAME)
+          
+          def myMap = getStagesDetails()
+          assert  myMap instanceof Map
+          echo "Printing in map:"
+          parseJson.prettyPrint(myMap)
+          
+          env.stages.each {
+            key = it.replace(" ","_")
+            assert myMap."${key}_status" instanceof String
+            assert myMap."${key}_dur".class == Integer    
+          }
+        }
+        
+        echo "Printing in json:"
+        echo getStagesDetails(,true)
+        echo "Testing getStagesDetails done."
       }
     }
   }
