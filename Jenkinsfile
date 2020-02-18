@@ -114,7 +114,8 @@ pipeline {
           env.stages << env.STAGE_NAME
           
           def myMap = getStagesDetails()
-          assert  myMap instanceof Map
+          echo myMap.getClass().toString()
+          assert myMap instanceof Map
           echo "Printing in map:"
           parseJson.prettyPrint(myMap)
           
