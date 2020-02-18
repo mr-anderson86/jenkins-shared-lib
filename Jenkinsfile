@@ -1,6 +1,7 @@
 @Library('my-shared-library') _
 //This pipeline is to test the functions in this repo
 
+List stages = []
 pipeline {
   agent any
   
@@ -9,10 +10,7 @@ pipeline {
       steps {
         echo "This is init"
         echo "Hoping that the getStageLog function will capture only this stage output"
-        script {
-          List stages = []
-          stages << env.STAGE_NAME
-        }
+        script { stages << env.STAGE_NAME }
       }
     }
     stage('test loadProperties') {
