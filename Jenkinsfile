@@ -10,7 +10,7 @@ pipeline {
         echo "This is init"
         echo "Hoping that the getStageLog function will capture only this stage output"
         script {
-          def env.stages = []
+          env.stages = []
           env.stages.push(env.STAGE_NAME)
         }
       }
