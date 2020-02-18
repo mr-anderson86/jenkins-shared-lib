@@ -17,7 +17,7 @@ pipeline {
     }
     stage('test loadProperties') {
       steps {
-        env.stages << env.STAGE_NAME
+        script { env.stages << env.STAGE_NAME }
         echo "Testing loadProperties function"
         echo ""
         echo "Env vars before test:"
@@ -47,7 +47,7 @@ pipeline {
     }
     stage('test getStageLog') {
       steps {
-        script { env.stages.push(env.STAGE_NAME) }
+        script { env.stages << env.STAGE_NAME }
         echo "Testing getStageLog function,"
         echo "showing output only from 'init' stage..."
         echo getStageLog('init')
@@ -58,7 +58,7 @@ pipeline {
       steps {
         echo "Testing parseJson function..."
         script {
-          env.stages.push(env.STAGE_NAME)
+          env.stages << env.STAGE_NAME
           
           def listTest = '"myList": [4, 8, 15, 16, 23, 42]'
           def intText = '"number": 123'
@@ -111,7 +111,7 @@ pipeline {
       steps {
         echo "Testing getStagesDetails..."
         script {
-          env.stages.push(env.STAGE_NAME)
+          env.stages << env.STAGE_NAME
           
           def myMap = getStagesDetails()
           assert  myMap instanceof Map
