@@ -114,13 +114,14 @@ pipeline {
           env.stages << env.STAGE_NAME
           
           def myMap = getStagesDetails()
-          echo myMap.getClass().toString()
           assert myMap instanceof Map
           echo "Printing in map:"
           parseJson.prettyPrint(myMap)
           
           env.stages.each {
             key = it.replace(" ","_")
+            echo myMap."${key}_status".getClass().toString()
+            echo myMap."${key}_dur".getClass().toString()
             assert myMap."${key}_status" instanceof String
             assert myMap."${key}_dur".class == Integer    
           }
