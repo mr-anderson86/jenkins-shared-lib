@@ -18,9 +18,9 @@ import static groovy.json.JsonOutput.*
 def call(String creds='', json = false) {  
   def url = "${JENKINS_URL}blue/rest/organizations/jenkins/pipelines/${JOB_NAME}/runs/${BUILD_NUMBER}/nodes/"
   if (creds?.trim()) {
-	url_host = env.JENKINS_URL.split('//')[1].split(':')[0]
-	url_port = env.JENKINS_URL.split('//')[1].split(':')[1]
-	url = "http://${creds}@${url_host}:${url_port}blue/rest/organizations/jenkins/pipelines/${JOB_NAME}/runs/${BUILD_NUMBER}/nodes/"
+    url_host = env.JENKINS_URL.split('//')[1].split(':')[0]
+    url_port = env.JENKINS_URL.split('//')[1].split(':')[1]
+    url = "http://${creds}@${url_host}:${url_port}blue/rest/organizations/jenkins/pipelines/${JOB_NAME}/runs/${BUILD_NUMBER}/nodes/"
   }
   def data = [:]
   def map = new JsonSlurper().parseText(new URL(url).text)
