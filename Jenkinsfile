@@ -1,7 +1,7 @@
 @Library('my-shared-library') _
 //This pipeline is to test the functions in this repo
 
-List stages = []
+List stagesList = []
 pipeline {
   agent any
   
@@ -10,12 +10,12 @@ pipeline {
       steps {
         echo "This is init"
         echo "Hoping that the getStageLog function will capture only this stage output"
-        script { stages << env.STAGE_NAME }
+        script { stagesList << env.STAGE_NAME }
       }
     }
     stage('test loadProperties') {
       steps {
-        script { stages << env.STAGE_NAME }
+        script { stagesList << env.STAGE_NAME }
         echo "Testing loadProperties function"
         echo ""
         echo "Env vars before test:"
@@ -45,7 +45,7 @@ pipeline {
     }
     stage('test getStageLog') {
       steps {
-        script { stages << env.STAGE_NAME }
+        script { stagesList << env.STAGE_NAME }
         echo "Testing getStageLog function,"
         echo "showing output only from 'init' stage..."
         echo getStageLog('init')
@@ -56,7 +56,7 @@ pipeline {
       steps {
         echo "Testing parseJson function..."
         script {
-          stages << env.STAGE_NAME
+          stagesList << env.STAGE_NAME
           
           def listTest = '"myList": [4, 8, 15, 16, 23, 42]'
           def intText = '"number": 123'
@@ -109,14 +109,14 @@ pipeline {
       steps {
         echo "Testing getStagesDetails..."
         script {
-          stages << env.STAGE_NAME
+          stagesList << env.STAGE_NAME
           
           def myMap = getStagesDetails()
           assert myMap instanceof Map
           echo "Printing in map:"
           parseJson.prettyPrint(myMap)
           
-          stages.each {
+          stagesList.each {
             key = it.replace(" ","_")
             echo "myMap.${key}_status class = " + myMap."${key}_status".getClass().toString()
             echo "myMap.${key}_dur class = " + myMap."${key}_dur".getClass().toString()
