@@ -124,7 +124,7 @@ pipeline {
         }
         
         echo "Printing in json:"
-        echo getStagesDetails(true,'blabla:blabla')
+        echo getStagesDetails(true)
         echo "Testing getStagesDetails done."
       }
     }
