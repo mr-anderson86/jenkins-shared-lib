@@ -35,8 +35,7 @@ def call(String creds='', json = false) {
     key = it.displayName.replace(" ","_")
     data."${key}_status" = it.result
     data."${key}_dur" = it.durationInMillis
-	
-    if (json) return toJson(data)
-    else return data
   }
+  if (json) return toJson(data)
+  else return data
 }
