@@ -18,14 +18,18 @@ import static groovy.json.JsonOutput.*
  */
 
 def call(String creds = null, Boolean json = false) {  
-  def url = "${JENKINS_URL}blue/rest/organizations/jenkins/pipelines/${JOB_NAME}/runs/${BUILD_NUMBER}/nodes/"
+  def url_path = "${JENKINS_URL}blue/rest/organizations/jenkins/pipelines/${JOB_NAME}/runs/${BUILD_NUMBER}/nodes/"
+  URL url = new URL(url_path)
+  def map
+  
   if (creds?.trim()) {
-    url_host = env.JENKINS_URL.split('//')[1].split(':')[0]
-    url_port = env.JENKINS_URL.split('//')[1].split(':')[1]
-    url = "http://${creds}@${url_host}:${url_port}blue/rest/organizations/jenkins/pipelines/${JOB_NAME}/runs/${BUILD_NUMBER}/nodes/"
+    def authString = creds.getBytes().encodeBase64().toString()
+    map = new JsonSlurper().parseText(url.getText(requestProperties: ["Authorization": "Basic ${authString}"]))
+  } else {
+    map = new JsonSlurper().parseText(url.text)
   }
+  
   def data = [:]
-  def map = new JsonSlurper().parseText(new URL(url).text)
   
   map.each {
     //Debugging
