@@ -41,3 +41,7 @@ def call(String creds = null, Boolean json = false) {
   if (json) return toJson(data)
   else return data
 }
+
+def call(Boolean json, String creds = null) {
+  return call (creds,json)
+}
