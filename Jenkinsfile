@@ -48,7 +48,7 @@ pipeline {
         script { stagesList << env.STAGE_NAME }
         echo "Testing getStageLog function,"
         echo "showing output only from 'init' stage..."
-        echo getStageLog('init')
+        echo "${getStageLog('init')}"
         echo "Testing getStageLog done."
       }
     }
