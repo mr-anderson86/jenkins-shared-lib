@@ -67,6 +67,7 @@ pipeline {
           def myMap = parseJson(jsonText)
           echo "After parsing to json:"
           assert myMap instanceof Map
+          echo myMap.getClass().toString()
           
           echo "myMap.name = ${myMap.name}"
           echo "myMap.number = ${myMap.number}"
@@ -115,6 +116,7 @@ pipeline {
           def myMap = getStagesDetails('onlyread:OnlyRead')
           //def myMap = getStagesDetails()
           assert myMap instanceof Map
+          echo myMap.getClass().toString()
           echo "Printing in map:"
           parseJson.prettyPrint(myMap)
           
