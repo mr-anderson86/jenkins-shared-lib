@@ -14,9 +14,9 @@ import static groovy.json.JsonOutput.*
  */
 def call(String json) {  
   def jsonSlurper = new JsonSlurper()
-  def data = jsonSlurper.parseText(json)
+  def data = jsonSlurper.parseText(json) 
   assert data instanceof Map
-  return data
+  return data as LinkedHashMap
 }
 
 /**
