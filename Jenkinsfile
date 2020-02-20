@@ -122,6 +122,8 @@ pipeline {
           
           stagesList.each {
             key = it.replace(" ","_")
+            echo "myMap.${key}_status = " +  myMap."${key}_status"
+            echo "myMap.${key}_duration = " +  myMap."${key}_duration"
             assert myMap."${key}_status" instanceof String
             assert myMap."${key}_duration".class == Integer    
           }
