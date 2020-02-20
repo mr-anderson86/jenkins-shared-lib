@@ -16,7 +16,7 @@ def call(String json) {
   def jsonSlurper = new JsonSlurper()
   def data = jsonSlurper.parseText(json) 
   assert data instanceof Map
-  return data as LinkedHashMap
+  return data
 }
 
 /**
