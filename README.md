@@ -41,40 +41,43 @@ Examples are below:
 
 pipeline {
   agent { node { label 'my_node' } }
-  stage ('stage_1') {
-    steps {
-      //can see the code under vars/loadProperties.groovy
-      loadProperties('path/to/file')
+  stages {
+    stage ('stage_1') {
+      steps {
+        //can see the code under vars/loadProperties.groovy
+        loadProperties('path/to/file')
 
-      // do some commands
-    }
-    post {
-      always {
-        //can see the code under vars/getStageLog.groovy
-        script { env.STAGE_LOG = getStageLog('stage_1') }
-        
-        writeFile file: "stage.log", text: "${env.STAGE_LOG}"
-        emailext (
-          subject: "[${JOB_NAME}] #${BUILD_NUMBER}] - Stage_1 status",
-          body: 'See log in attachment.',
-          to: "some.mail@some.company.com",
-          attachmentsPattern: "stage.log"
-        )
-        script { env.STAGE_LOG = "" }
+        // do some commands
+      }
+      post {
+        always {
+          //can see the code under vars/getStageLog.groovy
+          script { env.STAGE_LOG = getStageLog('stage_1') }
+
+          writeFile file: "stage.log", text: "${env.STAGE_LOG}"
+          emailext (
+            subject: "[${JOB_NAME}] #${BUILD_NUMBER}] - Stage_1 status",
+            body: 'See log in attachment.',
+            to: "some.mail@some.company.com",
+            attachmentsPattern: "stage.log"
+          )
+          script { env.STAGE_LOG = "" }
+        }
       }
     }
   }
-  stage ('stage_2') {
-    steps {
-      // do some other commands commands
-      script { env.STAGE_LOG = getStageLog('stage_2') }
-      emailext (
-        mimeType: 'text/html',
-        subject: "[${JOB_NAME}] #${BUILD_NUMBER}] - Stage_2 status",
-        body: """<html><body>Log is below: </br>${STAGE_LOG} </body></html>""",
-        to: "some.mail@some.company.com"
-      )
-      script { env.STAGE_LOG = "" }
+    stage ('stage_2') {
+      steps {
+        // do some other commands commands
+        script { env.STAGE_LOG = getStageLog('stage_2') }
+        emailext (
+          mimeType: 'text/html',
+          subject: "[${JOB_NAME}] #${BUILD_NUMBER}] - Stage_2 status",
+          body: """<html><body>Log is below: </br>${STAGE_LOG} </body></html>""",
+          to: "some.mail@some.company.com"
+        )
+        script { env.STAGE_LOG = "" }
+      }
     }
   }
 }
