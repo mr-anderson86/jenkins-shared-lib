@@ -1,4 +1,16 @@
-// Need to have "Slack Notification Plugin" v2.0.1 installed in your Jenkins
+/**
+ * Simply sends a Slack notification.
+ * Need to have "Slack Notification Plugin" v2.0.1 installed in your Jenkins
+ * In addition, configure the domain and team under Manage Jenkins -> Configure system
+ * (Good tutorial: https://www.youtube.com/watch?v=TWwvxn2-J7E )
+ *
+ * @param String buildStatus
+ * @return void
+ *
+ * @usage examples: 
+ *        default: slackeNotifyBuild() //will send "Build Started" msg
+ *        regular: slackeNotifyBuild(currentBuild.result)
+ */
 
 def call(String buildStatus = 'STARTED') {
   // build status of null means successful
