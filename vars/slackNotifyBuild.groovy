@@ -1,7 +1,7 @@
 /**
  * Simply sends a Slack notification.
  * Need to have "Slack Notification Plugin" v2.0.1 installed in your Jenkins
- * In addition, configure the domain and team under Manage Jenkins -> Configure system
+ * In addition, configure the domain and team under Manage Jenkins -> Configure system -> Slack
  * (Good tutorial: https://www.youtube.com/watch?v=TWwvxn2-J7E )
  *
  * @param String buildStatus
