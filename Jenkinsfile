@@ -12,7 +12,7 @@ pipeline {
         echo "This is init"
         echo "Hoping that the getStageLog function will capture only this stage output"
         script { stagesList << env.STAGE_NAME }
-        error "Just testing"
+        //error "Just testing" //For debugging
       }
     }
     stage('test loadProperties') {
