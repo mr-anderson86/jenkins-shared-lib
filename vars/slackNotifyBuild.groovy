@@ -18,7 +18,7 @@ def call(String buildStatus = 'STARTED') {
 
   // Default values
   def colorName = 'RED'
-  def colorCode = '#8b0000'
+  def colorCode = '#b30000'
   def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
   def summary = "${subject} (${env.BUILD_URL})"
 
@@ -37,7 +37,7 @@ def call(String buildStatus = 'STARTED') {
     colorCode = '#808080'
   } else {
     color = 'RED'
-    colorCode = '#8b0000'
+    colorCode = '#b30000'
   }
 
   // Send notifications
