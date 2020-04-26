@@ -28,7 +28,7 @@ def call(String buildStatus = 'STARTED') {
     colorCode = '#002db3'
   } else if (buildStatus == 'SUCCESS') {
     color = 'GREEN'
-    colorCode = '#006400'
+    colorCode = '#00b33c'
   } else if (buildStatus == 'UNSTABLE') {
     color = 'YELLOW'
     colorCode = '#e6e600'
