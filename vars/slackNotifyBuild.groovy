@@ -18,26 +18,26 @@ def call(String buildStatus = 'STARTED') {
 
   // Default values
   def colorName = 'RED'
-  def colorCode = '#FF0000'
+  def colorCode = '#8b0000'
   def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
   def summary = "${subject} (${env.BUILD_URL})"
 
   // Override default values based on build status
   if (buildStatus == 'STARTED') {
     color = 'BLUE'
-    colorCode = '#3385ff'
+    colorCode = '#002db3'
   } else if (buildStatus == 'SUCCESS') {
     color = 'GREEN'
-    colorCode = '#00FF00'
+    colorCode = '#006400'
   } else if (buildStatus == 'UNSTABLE') {
     color = 'YELLOW'
-    colorCode = '#FFFF00'
+    colorCode = '#e6e600'
   } else if (buildStatus == 'ABORTED' || buildStatus == 'NOT_BUILT') {
     color = 'GREY'
     colorCode = '#808080'
   } else {
     color = 'RED'
-    colorCode = '#FF0000'
+    colorCode = '#8b0000'
   }
 
   // Send notifications
