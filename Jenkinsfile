@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('init') {
       steps {
-        slackeNotifyBuild()
+        slackNotifyBuild()
         echo "This is init"
         echo "Hoping that the getStageLog function will capture only this stage output"
         script { stagesList << env.STAGE_NAME }
@@ -140,7 +140,7 @@ pipeline {
   }
   post {
     always {
-      slackeNotifyBuild(currentBuild.result)
+      slackNotifyBuild(currentBuild.result)
     }
   }
 }
