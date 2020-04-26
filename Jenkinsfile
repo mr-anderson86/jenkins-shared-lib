@@ -8,6 +8,7 @@ pipeline {
   stages {
     stage('init') {
       steps {
+        slackeNotifyBuild()
         echo "This is init"
         echo "Hoping that the getStageLog function will capture only this stage output"
         script { stagesList << env.STAGE_NAME }
@@ -135,6 +136,11 @@ pipeline {
         //echo getStagesDetails(true)
         echo "Testing getStagesDetails done."
       }
+    }
+  }
+  post {
+    always {
+      slackeNotifyBuild(currentBuild.result)
     }
   }
 }
