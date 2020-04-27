@@ -1,18 +1,24 @@
 /**
  * Simply sends a Slack notification.
  * Need to have "Slack Notification Plugin" v2.0.1 installed in your Jenkins
- * In addition, configure the domain and team under Manage Jenkins -> Configure system -> Slack
+ *
+ * If you wish to use the method without suppluying domain, token and channel
+ * Then configure the slack domain and team under Manage Jenkins -> Configure system -> Slack
  * (Good tutorial: https://www.youtube.com/watch?v=TWwvxn2-J7E )
  *
- * @param String buildStatus
+ * @param String buildStatus (optional)
+ * @param String slackDomain (optional)
+ * @param String slackToken (optional)
+ * @param String slackChannel (optional)
  * @return void
  *
  * @usage examples: 
- *        default: slackeNotifyBuild() //will send "Build Started" msg
- *        regular: slackeNotifyBuild(currentBuild.result)
+ *        slackeNotifyBuild() //will send "Build Started" msg, to default domain and channel
+ *        slackeNotifyBuild(currentBuild.result)
+ *        slackeNotifyBuild(currentBuild.result, 'my-domain', 'mYt0ken', 'my-channel')
  */
 
-def call(String buildStatus = 'STARTED') {
+def call(String buildStatus = 'STARTED', String slackDomain = '', String slackToken = '', String slackChannel = '') {
   // build status of null means successful
   buildStatus =  buildStatus ?: 'SUCCESS'
 
@@ -41,5 +47,9 @@ def call(String buildStatus = 'STARTED') {
   }
 
   // Send notifications
-  slackSend (color: colorCode, message: summary)
+  if (String slackDomain == '' || String slackToken == '' || String slackChannel == '') {
+    slackSend (color: colorCode, message: summary)
+  } else {
+    slackSend (color: colorCode, message: summary, teamDomain: slackDomain , token: slackToken, channel: slackChannel)
+  }
 }
