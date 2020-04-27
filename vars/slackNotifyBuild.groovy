@@ -2,7 +2,7 @@
  * Simply sends a Slack notification.
  * Need to have "Slack Notification Plugin" v2.0.1 installed in your Jenkins
  *
- * If you wish to use the method without suppluying domain, token and channel
+ * If you wish to use the method without supplying domain, token and channel
  * Then configure the slack domain and team under Manage Jenkins -> Configure system -> Slack
  * (Good tutorial: https://www.youtube.com/watch?v=TWwvxn2-J7E )
  *
