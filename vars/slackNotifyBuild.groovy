@@ -54,3 +54,12 @@ def call(String buildStatus = 'STARTED', String slackDomain = '', String slackTo
     slackSend (color: colorCode, message: summary, teamDomain: slackDomain , token: slackToken, channel: slackChannel)
   }
 }
+
+def call(Map config) {
+  if (!binding.hasVariable('config.buildStatus')) {config.buildStatus = 'STARTED'}
+  if (config.slackDomain == '' || config.slackToken == '' || config.slackChannel == '') {
+    call(config.buildStatus)
+  } else {
+    call(config.buildStatus, config.slackDomain, config.slackToken, config.slackChannel)
+  } 
+}
