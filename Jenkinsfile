@@ -141,7 +141,7 @@ pipeline {
   }
   post {
     always {
-      slackNotifyBuild(currentBuild.result)
+      slackNotifyBuild(buildStatus: currentBuild.result) //to test call with map argument
     }
   }
 }
