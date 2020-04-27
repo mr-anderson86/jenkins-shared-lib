@@ -47,7 +47,7 @@ def call(String buildStatus = 'STARTED', String slackDomain = '', String slackTo
   }
 
   // Send notifications
-  if (String slackDomain == '' || String slackToken == '' || String slackChannel == '') {
+  if (slackDomain == '' || slackToken == '' || slackChannel == '') {
     slackSend (color: colorCode, message: summary)
   } else {
     slackSend (color: colorCode, message: summary, teamDomain: slackDomain , token: slackToken, channel: slackChannel)
