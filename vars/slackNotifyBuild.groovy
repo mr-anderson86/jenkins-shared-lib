@@ -6,6 +6,7 @@
  * Then configure the slack domain and team under Manage Jenkins -> Configure system -> Slack
  * (Good tutorial: https://www.youtube.com/watch?v=TWwvxn2-J7E )
  *
+ * Can use both with direct strings or as a map, see examples below:
  * @param String buildStatus (optional)
  * @param String slackDomain (optional)
  * @param String slackToken (optional)
@@ -14,9 +15,13 @@
  *
  * @usage examples: 
  *        slackNotifyBuild() //will send "Build Started" msg, to default domain and channel
- *        slackNotifyBuild('STARTED', 'my-domain', 'mYt0ken', 'my-channel') //If you wish to send "Started" msg and override default domain/channel
  *        slackNotifyBuild(currentBuild.result)
- *        slackNotifyBuild(currentBuild.result, 'my-domain', 'mYt0ken', 'my-channel')
+ *        slackNotifyBuild(currentBuild.result, 'my-domain', 'mYt0ken', 'my-channel') //will override default domain/channel
+ *
+ *        //Examples with map (instead of direct strings input)
+ *        slackNotifyBuild(buildStatus: currentBuild.result)
+ *        slackNotifyBuild(slackDomain: 'my-domain', slackToken: 'mYt0ken', slackChannel: 'my-channel') //will send "Build Started" msg and override default domain/channel 
+ *        slackNotifyBuild(buildStatus: currentBuild.result, slackDomain: 'my-domain', slackToken: 'mYt0ken', slackChannel: 'my-channel')
  */
 
 def call(String buildStatus = 'STARTED', String slackDomain = '', String slackToken = '', String slackChannel = '') {
