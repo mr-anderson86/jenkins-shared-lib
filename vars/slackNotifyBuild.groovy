@@ -13,10 +13,10 @@
  * @return void
  *
  * @usage examples: 
- *        slackeNotifyBuild() //will send "Build Started" msg, to default domain and channel
- *        slackeNotifyBuild('STARTED', 'my-domain', 'mYt0ken', 'my-channel') //If you wish to send "Started" msg and override default domain/channel
- *        slackeNotifyBuild(currentBuild.result)
- *        slackeNotifyBuild(currentBuild.result, 'my-domain', 'mYt0ken', 'my-channel')
+ *        slackNotifyBuild() //will send "Build Started" msg, to default domain and channel
+ *        slackNotifyBuild('STARTED', 'my-domain', 'mYt0ken', 'my-channel') //If you wish to send "Started" msg and override default domain/channel
+ *        slackNotifyBuild(currentBuild.result)
+ *        slackNotifyBuild(currentBuild.result, 'my-domain', 'mYt0ken', 'my-channel')
  */
 
 def call(String buildStatus = 'STARTED', String slackDomain = '', String slackToken = '', String slackChannel = '') {
