@@ -25,38 +25,48 @@
  */
 
 def call(String buildStatus = 'STARTED', String slackDomain = '', String slackToken = '', String slackChannel = '') {
-  // build status of null means successful
-  buildStatus =  buildStatus ?: 'SUCCESS'
-
-  // Default values
-  def colorName = 'RED'
-  def colorCode = '#b30000'
-  def subject = "${buildStatus}: ${env.JOB_NAME} - #${env.BUILD_NUMBER}"
-  def summary = "${subject} (<${env.BUILD_URL}|Open>)"
-
-  // Override default values based on build status
+  def colorCode = ''
+  def msg = "${env.JOB_NAME} - #${env.BUILD_NUMBER}"
+  
   if (buildStatus == 'STARTED') {
-    color = 'BLUE'
+    //BLUE
     colorCode = '#002db3'
-  } else if (buildStatus == 'SUCCESS') {
-    color = 'GREEN'
-    colorCode = '#00b33c'
-  } else if (buildStatus == 'UNSTABLE') {
-    color = 'YELLOW'
-    colorCode = '#e6e600'
-  } else if (buildStatus == 'ABORTED' || buildStatus == 'NOT_BUILT') {
-    color = 'GREY'
-    colorCode = '#808080'
-  } else {
-    color = 'RED'
-    colorCode = '#b30000'
+    msg = "${msg} ${currentBuild.getBuildCauses()[0].shortDescription}"
   }
+  else {
+    def durationMills = currentBuild.duration
+    def durationCents = durationMills / 1000 - (int)(durationMills / 1000)
+    def durationSeconds = (int)(durationMills / 1000) % 60 + durationCents
+    int durationMinutes = (int)(durationMills / (1000*60)) % 60
+    int durationHours   = (int)(durationMills / (1000*60*60)) % 24
+    def durationString = ""
+    if (durationHours >= 1) { durationString = "${durationHours} hrs, "}
+    if (durationMinutes >= 1) { durationString = "${durationString}${durationMinutes} mins, "}
+    if (durationSeconds >= 1) { durationString = "${durationString}${durationSeconds} secs"}
+    if (durationString.endsWith(", ")) { durationString = durationString.substring(0, durationString.length() - 2) }   
+    msg = "${msg} ${buildStatus.toLowerCase().capitalize()} after ${durationString}"
+    
+    if (buildStatus == 'SUCCESS') {
+      //GREEN
+      colorCode = '#00b33c'
+    } else if (buildStatus == 'UNSTABLE') {
+      //YELLOW
+      colorCode = '#e6e600'
+    } else if (buildStatus == 'ABORTED' || buildStatus == 'NOT_BUILT') {
+      //GREY
+      colorCode = '#808080'
+    } else {
+      //RED
+      colorCode = '#b30000'
+    }
+  }
+  msg = "${msg} (<${env.BUILD_URL}|Open>)"
 
   // Send notifications
   if (slackDomain == '' || slackToken == '' || slackChannel == '') {
-    slackSend (color: colorCode, message: summary)
+    slackSend (color: colorCode, message: msg)
   } else {
-    slackSend (color: colorCode, message: summary, teamDomain: slackDomain , token: slackToken, channel: slackChannel)
+    slackSend (color: colorCode, message: msg, teamDomain: slackDomain , token: slackToken, channel: slackChannel)
   }
 }
 
