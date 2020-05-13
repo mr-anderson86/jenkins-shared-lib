@@ -42,8 +42,7 @@ def call(String buildStatus = 'STARTED', String slackDomain = '', String slackTo
     def durationString = ""
     if (durationHours >= 1) { durationString = "${durationHours} hrs, "}
     if (durationMinutes >= 1) { durationString = "${durationString}${durationMinutes} mins, "}
-    if (durationSeconds >= 1) { durationString = "${durationString}${durationSeconds} secs"}
-    if (durationString.endsWith(", ")) { durationString = durationString.substring(0, durationString.length() - 2) }   
+    durationString = "${durationString}${durationSeconds} secs" 
     msg = "${msg} ${buildStatus.toLowerCase().capitalize()} after ${durationString}"
     
     if (buildStatus == 'SUCCESS') {
