@@ -9,7 +9,7 @@
  * Can use both with direct strings or as a map, see examples below:
  * @param String buildStatus (optional)
  * @param String slackDomain (optional)
- * @param String slackToken (optional)
+ * @param String slackTokenId (optional)
  * @param String slackChannel (optional)
  * @return void
  *
@@ -20,13 +20,17 @@
  *
  *        //Examples with map (instead of direct strings input)
  *        slackNotifyBuild(buildStatus: currentBuild.result)
- *        slackNotifyBuild(slackDomain: 'my-domain', slackToken: 'mYt0ken', slackChannel: 'my-channel') //will send "Build Started" msg and override default domain/channel 
- *        slackNotifyBuild(buildStatus: currentBuild.result, slackDomain: 'my-domain', slackToken: 'mYt0ken', slackChannel: 'my-channel')
+ *        slackNotifyBuild(slackDomain: 'my-domain', slackTokenId: 'my-token-id', slackChannel: 'my-channel') //will send "Build Started" msg and override default domain/channel 
+ *        slackNotifyBuild(buildStatus: currentBuild.result, slackDomain: 'my-domain', slackTokenId: 'my-token-id', slackChannel: 'my-channel')
  */
 
-def call(String buildStatus = 'STARTED', String slackDomain = '', String slackToken = '', String slackChannel = '') {
+def call(String buildStatus = 'STARTED', String slackDomain = '', String slackTokenId = '', String slackChannel = '') {
   def colorCode = ''
   def msg = "${env.JOB_NAME} - #${env.BUILD_NUMBER}"
+  
+  if(currentBuild.number > 1 && currentBuild.getPreviousBuild().result != 'SUCCESS' && buildStatus == 'FAILURE') {
+    buildStatus = 'STILL_FAILING'
+  }
   
   if (buildStatus == 'STARTED') {
     //BLUE
@@ -43,9 +47,9 @@ def call(String buildStatus = 'STARTED', String slackDomain = '', String slackTo
     if (durationHours >= 1) { durationString = "${durationHours} hrs, "}
     if (durationMinutes >= 1) { durationString = "${durationString}${durationMinutes} mins, "}
     durationString = "${durationString}${durationSeconds} secs" 
-    msg = "${msg} ${buildStatus.toLowerCase().capitalize()} after ${durationString}"
+    msg = "${msg} ${buildStatus.toLowerCase().capitalize().replace('_',' ')} after ${durationString}"
     
-    if (buildStatus == 'SUCCESS') {
+    if (buildStatus == 'SUCCESS' || buildStatus == 'BACK_TO_NORMAL' ) {
       //GREEN
       colorCode = '#00b33c'
     } else if (buildStatus == 'UNSTABLE') {
@@ -62,22 +66,22 @@ def call(String buildStatus = 'STARTED', String slackDomain = '', String slackTo
   msg = "${msg} (<${env.BUILD_URL}|Open>)"
 
   // Send notifications
-  if (slackDomain == '' || slackToken == '' || slackChannel == '') {
+  if (slackDomain == '' || slackTokenId == '' || slackChannel == '') {
     slackSend (color: colorCode, message: msg)
   } else {
-    slackSend (color: colorCode, message: msg, teamDomain: slackDomain , token: slackToken, channel: slackChannel)
+    slackSend (color: colorCode, message: msg, teamDomain: slackDomain , tokenCredentialId: slackTokenId, channel: slackChannel)
   }
 }
 
 def call(Map config) {
   if (!config.containsKey('buildStatus')) {config.buildStatus = 'STARTED'}
-  if (!config.containsKey('slackDomain') || !config.containsKey('slackToken')|| !config.containsKey('slackChannel')) {
+  if (!config.containsKey('slackDomain') || !config.containsKey('slackTokenId')|| !config.containsKey('slackChannel')) {
     config.slackDomain = ''
   }
   
-  if (config.slackDomain == '' || config.slackToken == '' || config.slackChannel == '') {
+  if (config.slackDomain == '' || config.slackTokenId == '' || config.slackChannel == '') {
     call(config.buildStatus)
   } else {
-    call(config.buildStatus, config.slackDomain, config.slackToken, config.slackChannel)
+    call(config.buildStatus, config.slackDomain, config.slackTokenId, config.slackChannel)
   } 
 }
