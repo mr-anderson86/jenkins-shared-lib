@@ -31,6 +31,9 @@ def call(String buildStatus = 'STARTED', String slackDomain = '', String slackTo
   if(currentBuild.number > 1 && currentBuild.getPreviousBuild().result != 'SUCCESS' && buildStatus == 'FAILURE') {
     buildStatus = 'STILL_FAILING'
   }
+  if(currentBuild.number > 1 && currentBuild.getPreviousBuild().result != 'SUCCESS' && buildStatus == 'SUCCESS') {
+    buildStatus = 'BACK_TO_NORMAL'
+  }
   
   if (buildStatus == 'STARTED') {
     //BLUE
