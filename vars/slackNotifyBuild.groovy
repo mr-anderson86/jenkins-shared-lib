@@ -34,6 +34,12 @@ def call(String buildStatus = 'STARTED', String slackDomain = '', String slackTo
   if(currentBuild.number > 1 && currentBuild.getPreviousBuild().result != 'SUCCESS' && buildStatus == 'SUCCESS') {
     buildStatus = 'BACK_TO_NORMAL'
   }
+  if(currentBuild.number > 1 && currentBuild.getPreviousBuild().result == 'SUCCESS' && buildStatus == 'BACK_TO_NORMAL') {
+    /* just in case someone wants to use it to report only when "back to normal", and not every success.
+     * (In such case, he/she can put it under post --> success --> slackNotifyBuild(buildStatus: "BACK_TO_NORMAL") )
+     */
+    return
+  }
   
   if (buildStatus == 'STARTED') {
     //BLUE
