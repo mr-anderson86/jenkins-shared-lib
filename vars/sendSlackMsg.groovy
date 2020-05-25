@@ -55,7 +55,7 @@ def call(String msg, String color = '', boolean appendUrl = true ,String slackDo
 }
 
 def call(Map config) {
-  if (!config.containsKey('msg')) { error "Method 'sendSlackMsg' must contain param 'msg'!" }
+  if (!config.containsKey('msg')) { throw new Exception("Method 'sendSlackMsg' must contain param 'msg'!") }
   if (!config.containsKey('color')) { config.color = '' }
   if (!config.containsKey('appendUrl')) { config.appendUrl = true }
   if (!config.containsKey('slackDomain') || !config.containsKey('slackTokenId') || !config.containsKey('slackChannel')) {
