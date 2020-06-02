@@ -7,14 +7,15 @@ import static groovy.json.JsonOutput.*
  *
  * @param creds, String which contains Jenkins credentails (Must if no read permissions to anonymous)
  *               format: 'username:password'
- * @param json, if true, then it'll return the data in json format String, else it'll return it in map.
+ * @param toJson, if true, then it'll return the data in json format String, else it'll return it in map.
+ *
  * @return data, as map or json string
  *
  * @usage examples: def myMap = getStagesDetails()
- *                  def myMap = getStagesDetails('username:password')
- *                  def myJson = getStagesDetails(true)
- *                  def myJson = getStagesDetails('username:password', true)
- *                  def myJson = getStagesDetails(true, 'username:password')
+ *                  def myMap = getStagesDetails(creds: 'username:password')
+ *                  def myJson = getStagesDetails(toJson: true)
+ *                  def myJson = getStagesDetails(creds: 'username:password', toJson: true)
+ *                  def myJson = getStagesDetails(toJson: true, creds: 'username:password')
  */
 
 def call(String creds = null, Boolean json = false) {  
@@ -48,4 +49,10 @@ def call(String creds = null, Boolean json = false) {
 
 def call(Boolean json, String creds = null) {
   return call (creds,json)
+}
+
+def call(Map config) {
+  if (!config.containsKey('creds')) { config.arguments = '' }
+  if (!config.containsKey('toJson')) { config.tagLatest = false }
+  return call(config.creds, config.toJson)
 }
