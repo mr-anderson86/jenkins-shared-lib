@@ -59,7 +59,6 @@ def call(String registry, String creds, String image, String tag, Boolean tagLat
       }
     }
     newImage.push()
-    
   }
   
   //Cleanup
