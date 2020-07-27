@@ -4,8 +4,8 @@
  * @param String jobsFile (required)
  * @param List<params> parameters (optional)
  * @usage example:
- *        buildJobsFromFile(jobsFile: 'triggers.txt')
- *        buildJobsFromFile(jobsFile: 'triggers.txt', parameters: currentBuild.rawBuild.getAction(ParametersAction).getParameters())
+ *        triggerJobsFromFile(jobsFile: 'triggers.txt')
+ *        triggerJobsFromFile(jobsFile: 'triggers.txt', parameters: currentBuild.rawBuild.getAction(ParametersAction).getParameters())
  */
 
 def call(String jobsFile, parameters = []) {
@@ -28,7 +28,7 @@ def call(String jobsFile, parameters = []) {
 }
 
 def call(Map config) {
-    if (!config.containsKey('jobsFile')) { throw new Exception("Method 'buildJobsFromFile' must contain param 'jobsFile'!") }
+    if (!config.containsKey('jobsFile')) { throw new Exception("Method 'triggerJobsFromFile' must contain param 'jobsFile'!") }
     if (!config.containsKey('parameters')) {config.parameters = []}
     call(config.jobsFile, config.parameters)
 }
