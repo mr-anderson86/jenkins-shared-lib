@@ -36,7 +36,7 @@ def call(String registry, String creds, String image, String tag, Boolean tagLat
   }
   
   sh "docker pull ${dockerImageLatest} || true"
-  echo "Building and pushing docker image ${dockerImageFull}"
+  echo "Building docker image ${dockerImageFull}"
   docker.withRegistry("${registry}", "${dockerCredential}") {
     def newImage
     if (!forceBuild) {
@@ -48,15 +48,21 @@ def call(String registry, String creds, String image, String tag, Boolean tagLat
         latest_hash = sh(returnStdout: true, script: "docker inspect --format='{{index .RepoDigests 0}}' ${dockerImageLatest}").trim()
       }
       if (image_hash != latest_hash) {
+        echo "Pushing new image"
         newImage.push()
         if (tagLatest) {
+          echo "Tagging and pushing as latest"
           newImage.push('latest')
         }
+      } else {
+        echo "Both new image and latest image hashes are the same, so not pushing any new image."
       }
     } else {
+      echo "Force building and pushing image"
       newImage = docker.build(dockerImageFull, "${arguments}")
       newImage.push()
       if (tagLatest) {
+        echo "Tagging and pushing as latest"
         newImage.push('latest')
       }
     }
