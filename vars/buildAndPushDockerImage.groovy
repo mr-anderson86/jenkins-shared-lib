@@ -63,7 +63,7 @@ def call(String registry, String creds, String image, String tag, Boolean tagLat
   }
   
   //Cleanup
-  sh "docker rmi ${dockerImageFull} ${dockerImageLatest}"
+  sh "docker rmi ${dockerImageFull}"
   sh "docker rmi ${dockerImageLatest} || true"
   sh "docker images -f dangling=true | grep ${dockerRegistry}/${dockerImageName} | awk '{print \$3}' | xargs --no-run-if-empty docker rmi"
 }
