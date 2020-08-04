@@ -43,7 +43,7 @@ def call(String registry, String creds, String image, String tag, Boolean tagLat
       newImage = docker.build(dockerImageFull, "--cache-from ${dockerImageLatest} ${arguments}")
       image_hash = sh(returnStdout: true, script: "docker inspect --format='{{index .RepoDigests 0}}' ${dockerImageFull}").trim()
       def latest_hash = ''
-      latest_exist = sh(returnStdout: true, script: "docker images | grep -c ${dockerImageLatest}").trim() as Integer
+      latest_exist = sh(returnStdout: true, script: "docker images -q ${dockerImageLatest} | wc -l").trim() as Integer
       if (latest_exist > 0 ) {
         latest_hash = sh(returnStdout: true, script: "docker inspect --format='{{index .RepoDigests 0}}' ${dockerImageLatest}").trim()
       }
