@@ -35,11 +35,11 @@ def call(String registry, String creds, String image, String tag, Boolean tagLat
     arguments = "."
   }
   
+  sh "docker pull ${dockerImageLatest} || true"
   echo "Building and pushing docker image ${dockerImageFull}"
   docker.withRegistry("${registry}", "${dockerCredential}") {
     def newImage
     if (!forceBuild) {
-      sh "docker pull ${dockerImageLatest} || true"
       newImage = docker.build(dockerImageFull, "--cache-from ${dockerImageLatest} ${arguments}")
       image_hash = sh(returnStdout: true, script: "docker inspect --format='{{index .RepoDigests 0}}' ${dockerImageFull}").trim()
       latest_exist = sh(returnStdout: true, script: "docker images | grep -c ${dockerImageLatest}").trim() as Integer
@@ -53,7 +53,7 @@ def call(String registry, String creds, String image, String tag, Boolean tagLat
         }
       }
     } else {
-      newImage = docker.build(dockerImageFull, "${arguments}"
+      newImage = docker.build(dockerImageFull, "${arguments}")
       newImage.push()
       if (tagLatest) {
         newImage.push('latest')
