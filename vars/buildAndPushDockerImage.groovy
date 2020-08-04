@@ -2,6 +2,7 @@
  * Build and push docker image into docker registry
  * If forceBuild==false, then it'll build with cache-from latest, and compare hash between latest and new image.
  * and only if hashes are different, then it'll push new image. (Otherwise, won't push new image)
+ * Works only on Linux
  * 
  * @param String registry (required)
  * @param String creds (required)
@@ -47,7 +48,7 @@ def call(String registry, String creds, String image, String tag, Boolean tagLat
         if (image_hash != latest_hash) {
           newImage.push()
           if (tagLatest) {
-            newImage.push()
+            newImage.push('latest')
           }
         }
       }
