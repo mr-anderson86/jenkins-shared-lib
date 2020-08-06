@@ -15,7 +15,7 @@
  * @return void
  *
  * @usage examples:
- *        buildAndPushDockerImage(registry: "my.example.registry", creds: "my-creds-1234", image: 'repo/my-image', tag: '1.0.0')
+ *        buildAndPushDockerImage(registry: "https://my.example.registry", creds: "my-creds-1234", image: 'repo/my-image', tag: '1.0.0')
  *        buildAndPushDockerImage(..., tagLatest:false) //if there's new image to push, it won't tag it as latest
  *        buildAndPushDockerImage(..., forceBuild: true)
  *        buildAndPushDockerImage(..., arguments: "-f MyDockerFile ./my_sub_dir")
