@@ -15,10 +15,6 @@
  *
  * @usage examples: 
  *        slackNotifyBuild() //will send "Build Started" msg, to default domain and channel
- *        slackNotifyBuild(currentBuild.result)
- *        slackNotifyBuild(currentBuild.result, 'my-domain', 'mYt0ken', 'my-channel') //will override default domain/channel
- *
- *        //Examples with map (instead of direct strings input)
  *        slackNotifyBuild(buildStatus: currentBuild.result)
  *        slackNotifyBuild(slackDomain: 'my-domain', slackTokenId: 'my-token-id', slackChannel: 'my-channel') //will send "Build Started" msg and override default domain/channel 
  *        slackNotifyBuild(buildStatus: currentBuild.result, slackDomain: 'my-domain', slackTokenId: 'my-token-id', slackChannel: 'my-channel')
