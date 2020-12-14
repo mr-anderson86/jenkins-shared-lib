@@ -10,6 +10,8 @@
  * @param String msg (requiered)
  * @param String color (optional)
  * @param boolean appendUrl (optional)
+ * @param boolean isBotUser (optional) - if true, then it'll send msg from the bot, using token relevant token ID
+ * @param String slackEmoji (optional) - for example - slackEmoji: "thumbsup" will send a message along with a thumbs up emoji.
  * @param String slackDomain (optional)
  * @param String slackTokenId (optional)
  * @param String slackChannel (optional)
@@ -18,9 +20,16 @@
  * @usage examples: 
  *        sendSlackMsg(msg: 'this is my msg', color: 'green', appendUrl: false)
  *        sendSlackMsg(msg: 'this is my msg', color: 'green', appendUrl: false, slackDomain: 'my-domain', slackTokenId: 'my-token-id', slackChannel: 'my-channel')
+ *
+ *       can also send from a bot directly to user (see slackChannel parameter):
+ *       sendSlackMsg(msg: 'this is my msg', color: 'green', appendUrl: false, isBotUser: true, slackEmoji: "thumbsup", 
+ *                    slackDomain: 'my-domain', slackTokenId: 'my-token-id', slackChannel: 'some.user')
  */
 
-def call(String msg, String color = '', boolean appendUrl = true ,String slackDomain = '', String slackTokenId = '', String slackChannel = '') {
+def call(String msg, String color = '', boolean appendUrl = true ,
+         boolean isBotUser=false, String slackEmoji='',
+         String slackDomain = '', String slackTokenId = '', String slackChannel = '') {
+         
   def colorCode = ''
   
   if (color.toLowerCase() == 'blue') {
@@ -45,26 +54,32 @@ def call(String msg, String color = '', boolean appendUrl = true ,String slackDo
   if (appendUrl) {
     msg = "${msg} (<${env.BUILD_URL}|Open>)"
   }
-
-  // Send notifications
-  if (slackDomain == '' || slackTokenId == '' || slackChannel == '') {
-    slackSend (color: colorCode, message: msg)
-  } else {
-    slackSend (color: colorCode, message: msg, teamDomain: slackDomain , tokenCredentialId: slackTokenId, channel: slackChannel)
+  
+  conf = [:]
+  conf.message = msg
+  conf.color = colorCode
+  conf.botUser = isBotUser
+  conf.iconEmoji = slackEmoji
+  
+  if (!(slackDomain == '' || slackTokenId == '' || slackChannel == '')) {
+    conf.teamDomain = slackDomain
+    conf.tokenCredentialId = slackTokenId
+    conf.channel = slackChannel
   }
+  slackSend(conf)
 }
 
 def call(Map config) {
   if (!config.containsKey('msg')) { throw new Exception("Method 'sendSlackMsg' must contain param 'msg'!") }
   if (!config.containsKey('color')) { config.color = '' }
+  if (!config.containsKey('slackEmoji')) { config.slackEmoji = '' }
+  if (!config.containsKey('isBotUser')) { config.isBotUser = true }
   if (!config.containsKey('appendUrl')) { config.appendUrl = true }
   if (!config.containsKey('slackDomain') || !config.containsKey('slackTokenId') || !config.containsKey('slackChannel')) {
     config.slackDomain = ''
+    config.slackTokenId = ''
+    config.slackChannel = ''
   }
   
-  if (config.slackDomain == '' || config.slackTokenId == '' || config.slackChannel == '') {
-    call(config.msg, config.color, config.appendUrl)
-  } else {
-    call(config.msg, config.color, config.appendUrl, config.slackDomain, config.slackTokenId, config.slackChannel)
-  } 
+  call(config.msg, config.color, config.appendUrl, config.isBotUser, config.slackEmoji, config.slackDomain, config.slackTokenId, config.slackChannel) 
 }
