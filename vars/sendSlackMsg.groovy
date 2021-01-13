@@ -73,7 +73,7 @@ def call(Map config) {
   if (!config.containsKey('msg')) { throw new Exception("Method 'sendSlackMsg' must contain param 'msg'!") }
   if (!config.containsKey('color')) { config.color = '' }
   if (!config.containsKey('slackEmoji')) { config.slackEmoji = '' }
-  if (!config.containsKey('isBotUser')) { config.isBotUser = true }
+  if (!config.containsKey('isBotUser')) { config.isBotUser = false }
   if (!config.containsKey('appendUrl')) { config.appendUrl = true }
   if (!config.containsKey('slackDomain') || !config.containsKey('slackTokenId') || !config.containsKey('slackChannel')) {
     config.slackDomain = ''
