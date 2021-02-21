@@ -36,14 +36,14 @@ def call(String registry, String creds, String image, String tag, Boolean tagLat
     arguments = "."
   }
   
-  def registry_arr = [registry]
+  /*def registry_arr = [registry]
   if (creds != null && creds != '' ) {
     registry_arr << creds
-  }
+  }*/
   
   
   echo "Building docker image ${dockerImageFull}"
-  docker.withRegistry(registry_arr) {
+  docker.withRegistry(registry, creds) {
     sh "docker pull ${dockerImageLatest} || true"
     def newImage
     if (!forceBuild) {
