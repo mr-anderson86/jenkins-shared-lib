@@ -55,7 +55,7 @@ def call(String registry, String creds, String image, String tag, Boolean tagLat
         latest_hash = sh(returnStdout: true, script: "docker images --no-trunc --quiet ${dockerImageLatest}").trim()
       }
       if (image_hash != latest_hash) {
-        echo "Pushing new image"
+        echo "Pushing new image ${dockerImageFull}"
         newImage.push()
         if (tagLatest) {
           echo "Tagging and pushing as latest"
@@ -65,7 +65,7 @@ def call(String registry, String creds, String image, String tag, Boolean tagLat
         echo "Both new image and latest image hashes are the same, so not pushing any new image."
       }
     } else {
-      echo "Force building and pushing image"
+      echo "Force building and pushing image ${dockerImageFull}"
       newImage = docker.build(dockerImageFull, "${arguments}")
       newImage.push()
       if (tagLatest) {
