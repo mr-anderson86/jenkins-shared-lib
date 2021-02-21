@@ -23,13 +23,12 @@
  */
 
 def call(String registry, String creds, String image, String tag, Boolean tagLatest=true, Boolean forceBuild=false, String arguments='', Boolean cleanup=true) {
-  for (var in [registry, creds, image, tag]) {
+  for (var in [registry, image, tag]) {
     if (var == null || var == '') {
-      throw new Exception("Method 'buildAndPushDockerImage' must contain params 'registry' ,'creds', 'image', 'tag' !!!")
+      throw new Exception("Method 'buildAndPushDockerImage' must contain params 'registry', 'image', 'tag' !!!")
     }
   }
   String dockerRegistry = registry.replaceAll('https://','').replaceAll('http://','')
-  String dockerCredential = creds
   String dockerImageName = "${image}"
   String dockerImageFull = "${dockerRegistry}/${dockerImageName}:${tag}"
   String dockerImageLatest = "${dockerRegistry}/${dockerImageName}:latest"
@@ -37,8 +36,14 @@ def call(String registry, String creds, String image, String tag, Boolean tagLat
     arguments = "."
   }
   
+  def registry_arr = [registry]
+  if (creds != null && creds != '' ) {
+    registry_arr << creds
+  }
+  
+  
   echo "Building docker image ${dockerImageFull}"
-  docker.withRegistry("${registry}", "${dockerCredential}") {
+  docker.withRegistry(registry_arr) {
     sh "docker pull ${dockerImageLatest} || true"
     def newImage
     if (!forceBuild) {
