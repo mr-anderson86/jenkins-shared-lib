@@ -91,8 +91,11 @@ pipeline {
           
           echo "Testing parseJson.fromUrl..."
           echo "Grabbing json from currn build url: ${BUILD_URL}api/json"
-          myMap = parseJson.fromUrl("${BUILD_URL}api/json", 'onlyread:OnlyRead')
-          //myMap = parseJson.fromUrl("${BUILD_URL}api/json")
+          mymap = []
+          withCredentials([usernamePassword(credentialsId: 'jenkins_login', usernameVariable: 'JENKINS_USER', passwordVariable: 'JENKINS_PASS')]) {
+            myMap = parseJson.fromUrl("${BUILD_URL}api/json", "${JENKINS_USER}:${JENKINS_PASS}")
+            //myMap = parseJson.fromUrl("${BUILD_URL}api/json")
+          }
           
           assert myMap instanceof Map
           echo "myMap.number = ${myMap.number}"
