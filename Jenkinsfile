@@ -8,7 +8,7 @@ pipeline {
   stages {
     stage('init') {
       steps {
-        slackNotifyBuild()
+        //slackNotifyBuild()
         echo "This is init"
         echo "Hoping that the getStageLog function will capture only this stage output"
         script { stagesList << env.STAGE_NAME }
@@ -141,7 +141,8 @@ pipeline {
   }
   post {
     always {
-      slackNotifyBuild(buildStatus: currentBuild.result) //to test call with map argument
+      //slackNotifyBuild(buildStatus: currentBuild.result) //to test call with map argument
+      echo "Done"
     }
   }
 }
