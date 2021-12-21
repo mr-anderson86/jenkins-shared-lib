@@ -1,4 +1,4 @@
-import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic
 import static groovy.json.JsonOutput.*
 //PLEASE NOTE: Need Blue ocean plugin installed on your Jenkins
 
@@ -25,9 +25,9 @@ def call(String creds = null, Boolean json = false) {
   
   if (creds?.trim()) {
     def authString = creds.getBytes().encodeBase64().toString()
-    map = new JsonSlurper().parseText(url.getText(requestProperties: ["Authorization": "Basic ${authString}"]))
+    map = new JsonSlurperClassic().parseText(url.getText(requestProperties: ["Authorization": "Basic ${authString}"]))
   } else {
-    map = new JsonSlurper().parseText(url.text)
+    map = new JsonSlurperClassic().parseText(url.text)
   }
   
   def data = [:]
