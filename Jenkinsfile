@@ -118,7 +118,10 @@ pipeline {
         script {
           stagesList << env.STAGE_NAME
           
-          def myMap = getStagesDetails('onlyread:OnlyRead')
+          def myMap = []
+          withCredentials([usernamePassword(credentialsId: 'jenkins_login', usernameVariable: 'JENKINS_USER', passwordVariable: 'JENKINS_PASS')]) {
+            myMap = getStagesDetails("${JENKINS_USER}:${JENKINS_PASS}")
+          }
           //def myMap = getStagesDetails()
           assert myMap instanceof Map
           echo myMap.getClass().toString()
@@ -134,10 +137,12 @@ pipeline {
           }
         }
         
-        echo "Printing in json:"
-        echo getStagesDetails(true,'onlyread:OnlyRead')
-        echo getStagesDetails('onlyread:OnlyRead',true)
-        //echo getStagesDetails(true)
+        withCredentials([usernamePassword(credentialsId: 'jenkins_login', usernameVariable: 'JENKINS_USER', passwordVariable: 'JENKINS_PASS')]) {
+          echo "Printing in json:"
+          echo getStagesDetails(true,"${JENKINS_USER}:${JENKINS_PASS}")
+          echo getStagesDetails("${JENKINS_USER}:${JENKINS_PASS}",true)
+          //echo getStagesDetails(true)
+        }
         echo "Testing getStagesDetails done."
       }
     }
