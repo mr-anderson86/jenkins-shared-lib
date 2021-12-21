@@ -1,4 +1,4 @@
-import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic
 import static groovy.json.JsonOutput.*
 //PLEASE NOTE: Might need admin script appoval (unless using as shared library)
 
@@ -12,8 +12,9 @@ import static groovy.json.JsonOutput.*
  *
  * @usage example: def myMap = parseJson('{ "name": "John Doe" }')
  */
+@NonCPS
 def call(String json) {  
-  def jsonSlurper = new JsonSlurper()
+  def jsonSlurper = new JsonSlurperClassic()
   def data = jsonSlurper.parseText(json) 
   assert data instanceof Map
   return data
@@ -48,12 +49,13 @@ def mapToJson(Map data) {
  * @usage examples: def myMap = parseJson.fromUrl("${BUILD_URL}/api/json")
  *                  def myMap = parseJson.fromUrl("${BUILD_URL}/api/json", 'myUser:myPassword')
  */
+@NonCPS
 def fromUrl(String url_path, String auth='') {
   URL url = new URL(url_path)
   if (auth?.trim()) {
     def authString = auth.getBytes().encodeBase64().toString()
-    return new JsonSlurper().parseText(url.getText(requestProperties: ["Authorization": "Basic ${authString}"]))
+    return new JsonSlurperClassic().parseText(url.getText(requestProperties: ["Authorization": "Basic ${authString}"]))
   } else {
-    return new JsonSlurper().parseText(url.text)
+    return new JsonSlurperClassic().parseText(url.text)
   }
 }
