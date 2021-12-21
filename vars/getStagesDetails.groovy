@@ -18,6 +18,7 @@ import static groovy.json.JsonOutput.*
  *                  def myJson = getStagesDetails(toJson: true, creds: 'username:password')
  */
 
+@NonCPS
 def call(String creds = null, Boolean json = false) {  
   def url_path = "${JENKINS_URL}blue/rest/organizations/jenkins/pipelines/${JOB_NAME}/runs/${BUILD_NUMBER}/nodes/"
   URL url = new URL(url_path)
