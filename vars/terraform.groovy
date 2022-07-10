@@ -11,7 +11,7 @@
  * @return void
  *
  * @usage examples: 
- *        tfUtils.init(stateName: 'key=my-terraform-state')
+ *        terraform.init(stateName: 'key=my-terraform-state')
  */
 def init(String stateName) {
   sh "rm -f .terraform/terraform.tfstate"
@@ -34,8 +34,8 @@ def init(Map config) {
  * @return boolean
  *
  * @usage examples: 
- *        tfUtils.isResourceExist(resourceName: 'aws_vpc.my_vpc')
- *        tfUtils.isResourceExist(resourceName: 'aws_key_pair.generated_key[0]')
+ *        terraform.isResourceExist(resourceName: 'aws_vpc.my_vpc')
+ *        terraform.isResourceExist(resourceName: 'aws_key_pair.generated_key[0]')
  */
 
 def isResourceExist(String resourceName) {
@@ -59,10 +59,10 @@ def isResourceExist(Map config) {
  * @return String
  *
  * @usage examples:
- *        def vpc_id = tfUtils.getAwsVpcId(vpcResourceName: 'aws_vpc.my_vpc')
- *        def vpc_id = tfUtils.getAwsVpcId(vpcResourceName: 'my_vpc')        //for aws_vpc.my_key
- *        def vpc_id = tfUtils.getAwsVpcId(vpcResourceName: 'aws_vpc.multi_vpc[0]')
- *        def vpc_id = tfUtils.getAwsVpcId(vpcResourceName: 'multi_vpc[0]') //for aws_vpc.multi_vpc[0]
+ *        def vpc_id = terraform.getAwsVpcId(vpcResourceName: 'aws_vpc.my_vpc')
+ *        def vpc_id = terraform.getAwsVpcId(vpcResourceName: 'my_vpc')        //for aws_vpc.my_key
+ *        def vpc_id = terraform.getAwsVpcId(vpcResourceName: 'aws_vpc.multi_vpc[0]')
+ *        def vpc_id = terraform.getAwsVpcId(vpcResourceName: 'multi_vpc[0]') //for aws_vpc.multi_vpc[0]
  */
 
 def getAwsVpcId(String vpcResourceName) {
@@ -87,10 +87,10 @@ def getAwsVpcId(Map config) {
  * @return String
  *
  * @usage examples:
- *        def key_name = tfUtils.getAwsKeyPairName(keyResourceName: 'aws_key_pair.my_key')
- *        def key_name = tfUtils.getAwsKeyPairName(keyResourceName: 'my_key')       //for aws_key_pair.my_key
- *        def key_name = tfUtils.getAwsKeyPairName(keyResourceName: 'aws_key_pair.multi_key[0]')
- *        def key_name = tfUtils.getAwsKeyPairName(keyResourceName: 'multi_key[0]') //for aws_key_pair.multi_key[0]
+ *        def key_name = terraform.getAwsKeyPairName(keyResourceName: 'aws_key_pair.my_key')
+ *        def key_name = terraform.getAwsKeyPairName(keyResourceName: 'my_key')       //for aws_key_pair.my_key
+ *        def key_name = terraform.getAwsKeyPairName(keyResourceName: 'aws_key_pair.multi_key[0]')
+ *        def key_name = terraform.getAwsKeyPairName(keyResourceName: 'multi_key[0]') //for aws_key_pair.multi_key[0]
  */
 
 def getAwsKeyPairName(String keyResourceName) {
@@ -116,8 +116,8 @@ def getAwsKeyPairName(Map config) {
  * @return void
  *
  * @usage examples: 
- *        tfUtils.destroyExclude(excludeList: ['vpc', 'subnet'])
- *        tfUtils.destroyExclude(excludeList: ['vpc', 'subnet'], varList: ['deploy_region=us-east-1', 'cluster_name=my-cluster'])
+ *        terraform.destroyExclude(excludeList: ['vpc', 'subnet'])
+ *        terraform.destroyExclude(excludeList: ['vpc', 'subnet'], varList: ['deploy_region=us-east-1', 'cluster_name=my-cluster'])
  */
 
 def destroyExclude(ArrayList excludeList = [], ArrayList varList = []) {
