@@ -111,12 +111,13 @@ def getAwsKeyPairName(Map config) {
  * Does terraform destroy, excluding the list of resources provided in parameter.
  * (Must be in the relevant terraform directory first)
  * 
- * @param ArrayList excludeList (requiered, list of strings)
+ * @param ArrayList excludeList (requiered, list of strings) - can be full or partial name of resources, see examples below
  * @param ArrayList varList (optional, list of strings)
  * @return void
  *
  * @usage examples: 
  *        terraform.destroyExclude(excludeList: ['vpc', 'subnet'])
+ *        terraform.destroyExclude(excludeList: ['aws_vpc.my-vpc', 'aws_subnet'])
  *        terraform.destroyExclude(excludeList: ['vpc', 'subnet'], varList: ['deploy_region=us-east-1', 'cluster_name=my-cluster'])
  */
 
