@@ -17,6 +17,7 @@ This repo contains simple methods which could be use in every Jenkins pipeline.
 * [getStageLog](vars/getStageLog.groovy) - captures the log from a spesific stage within the current build.
 * [loadProperties](vars/loadProperties.groovy) - loads all variables from file both into shell and into pipeline's env map.
 * [slackNotifyBuild](vars/slackNotifyBuild.groovy) - sends notifications to a Slack channel.
+* [terraform](vars/terraform.groovy) - terraform utils.
 * [Jenkinsfile](Jenkinsfile) - a pipeline which tests the functions in this repo.
 * Hopefully to have more useful methods in the future :-)
 
