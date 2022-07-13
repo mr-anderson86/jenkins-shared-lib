@@ -1,4 +1,5 @@
 //Terraform Utils
+//Works only within a "script" block
 
 //Works only on bash/sh Linux based agents / docker agents based on linux with bash/sh
 //(And of course - with terraform binary installed there...)
