@@ -21,7 +21,7 @@ def init(String stateName) {
 
 def init(Map config) {
   if (!config.containsKey('stateName')) {
-    throw new Exception("Method 'tfInit' must contain param 'stateName'!") 
+    throw new Exception("Method 'terraform.init' must contain param 'stateName'!") 
   }
   init(config.stateName)
 }
