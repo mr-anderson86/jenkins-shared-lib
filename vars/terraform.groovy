@@ -46,7 +46,7 @@ def isResourceExist(String resourceName) {
 
 def isResourceExist(Map config) {
   if (!config.containsKey('resourceName')) {
-    throw new Exception("Method 'tfIsResourceExist' must contain param 'resourceName'!") 
+    throw new Exception("Method 'terraform.isResourceExist' must contain param 'resourceName'!") 
   }
   return isResourceExist(config.resourceName)
 }
@@ -74,7 +74,7 @@ def getAwsVpcId(String vpcResourceName) {
 
 def getAwsVpcId(Map config) {
   if (!config.containsKey('vpcResourceName')) {
-    throw new Exception("Method 'tfGetAwsVpcId' must contain param 'vpcResourceName'!") 
+    throw new Exception("Method 'terraform.getAwsVpcId' must contain param 'vpcResourceName'!") 
   }
   return getAwsVpcId(config.vpcResourceName)
 }
@@ -102,7 +102,7 @@ def getAwsKeyPairName(String keyResourceName) {
 
 def getAwsKeyPairName(Map config) {
   if (!config.containsKey('keyResourceName')) {
-    throw new Exception("Method 'tfGetAwsKeyPairName' must contain param 'keyResourceName'!") 
+    throw new Exception("Method 'terraform.getAwsKeyPairName' must contain param 'keyResourceName'!") 
   }
   return getAwsKeyPairName(config.keyResourceName)
 }
@@ -154,7 +154,7 @@ def destroyExclude(ArrayList excludeList = [], ArrayList varList = []) {
 
 def destroyExclude(Map config) {
   if (!config.containsKey('excludeList')) {
-    throw new Exception("Method 'tfDestroyExclude' must contain param 'excludeList'!") 
+    throw new Exception("Method 'terraform.destroyExclude' must contain param 'excludeList'!") 
   }
   if (!config.containsKey('varList')) { config.varList = [] }
   destroyExclude(config.excludeList, config.varList)
